@@ -220,14 +220,37 @@ Each phase is self-contained — a fresh conversation can resume from any phase 
 
 ## Phase 4 — Protected dashboard layout (sidebar + topbar)
 
-- [ ] `widgets/sidebar/ui/Sidebar.tsx`: vertical nav; logo/app-name top; nav list (currently one item: "Users", `Users` lucide icon, link to `/dashboard/users`); active styling via `NavLink` `isActive`. Mirrors `deps/app/layouts/app-sidebar` composition (label + icon column).
-- [ ] Mobile: replace `Sidebar` with a `Sheet` triggered by hamburger button in topbar at `<md` breakpoint.
-- [ ] `widgets/topbar/ui/Topbar.tsx`: right-aligned cluster — `ThemeToggle` + profile `DropdownMenu` (avatar trigger; items: "Profile" → `/dashboard/profile`, "Logout" → `useLogout()`).
-- [ ] `features/logout/model/useLogout.ts`: `tokenStorage.clear()` → toast "Signed out" → `navigate('/login')`.
-- [ ] `features/theme-toggle/ui/ThemeToggle.tsx`: shadcn icon button toggling `useTheme()`.
-- [ ] `pages/dashboard-layout/ui/DashboardLayout.tsx`: CSS-grid shell — sidebar (left, hidden on mobile) + main column (topbar + `<Outlet />`). Use CSS vars `--topbar-height` / `--sidebar-width` per `deps` convention.
-- [ ] Wire `RequireAuth` → `DashboardLayout` in routes config.
-- [ ] Verify: post-login lands in shell; logout clears token + redirects; dropdown is keyboard-navigable.
+- [x] `widgets/sidebar/ui/Sidebar.tsx`: vertical nav; logo/app-name top; nav list (currently one item: "Users", `Users` lucide icon, link to `/dashboard/users`); active styling via `NavLink` `isActive`. Mirrors `deps/app/layouts/app-sidebar` composition (label + icon column).
+- [x] Mobile: replace `Sidebar` with a `Sheet` triggered by hamburger button in topbar at `<md` breakpoint.
+- [x] `widgets/topbar/ui/Topbar.tsx`: right-aligned cluster — `ThemeToggle` + profile `DropdownMenu` (avatar trigger; items: "Profile" → `/dashboard/profile`, "Logout" → `useLogout()`).
+- [x] `features/logout/model/useLogout.ts`: `tokenStorage.clear()` → toast "Signed out" → `navigate('/login')`.
+- [x] `features/theme-toggle/ui/ThemeToggle.tsx`: shadcn icon button toggling `useTheme()`.
+- [x] `pages/dashboard-layout/ui/DashboardLayout.tsx`: CSS-grid shell — sidebar (left, hidden on mobile) + main column (topbar + `<Outlet />`). Use CSS vars `--topbar-height` / `--sidebar-width` per `deps` convention.
+- [x] Wire `RequireAuth` → `DashboardLayout` in routes config.
+- [x] Verify: post-login lands in shell; logout clears token + redirects; dropdown is keyboard-navigable.
+
+### Files changed
+
+- `src/app/styles/index.css` — Added `--topbar-height` and `--sidebar-width` variables.
+- `src/shared/lib/userStorage.ts` — Added helper for current user data persistence.
+- `src/shared/lib/index.ts` — Exported `userStorage`.
+- `src/features/auth-by-credentials/ui/LoginForm.tsx` — Updated to use `userStorage`.
+- `src/features/logout/model/useLogout.ts` — Implemented logout logic with token and user data clearing.
+- `src/features/logout/index.ts` — Exported `useLogout`.
+- `src/features/theme-toggle/ui/ThemeToggle.tsx` — Built theme switcher component.
+- `src/features/theme-toggle/index.ts` — Exported `ThemeToggle`.
+- `src/widgets/sidebar/ui/Sidebar.tsx` — Built the dashboard sidebar with navigation.
+- `src/widgets/sidebar/index.ts` — Exported `AppSidebar`.
+- `src/widgets/topbar/ui/Topbar.tsx` — Built the dashboard topbar with theme toggle and profile dropdown.
+- `src/widgets/topbar/index.ts` — Exported `Topbar`.
+- `src/pages/dashboard-layout/ui/DashboardLayout.tsx` — Built the main dashboard layout shell.
+- `src/pages/dashboard-layout/index.ts` — Exported `DashboardLayout` as lazy component.
+- `src/app/providers/router/routes.tsx` — Integrated `DashboardLayout` into routing.
+- `src/shared/ui/sidebar.tsx` — Added shadcn Sidebar primitive.
+- `src/shared/ui/separator.tsx` — Added shadcn Separator primitive.
+- `src/shared/ui/dropdown-menu.tsx` — Added shadcn DropdownMenu primitive.
+- `src/shared/ui/avatar.tsx` — Added shadcn Avatar primitive.
+- `src/hooks/use-mobile.ts` — Added hook for mobile breakpoint detection.
 
 ## Phase 5 — Users page (TanStack Table, nuqs, use() + Suspense)
 
