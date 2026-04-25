@@ -1,6 +1,0 @@
-export const ACCESSTOKEN_LOCALSTORAGE_KEY = 'naiton-access-token'
-export const REFRESHTOKEN_LOCALSTORAGE_KEY = 'naiton-refresh-token'
-export const COMPANYINFO_LOCALSTORAGE_KEY = 'naiton-company-info'
-export const LNG_LOCALSTORAGE_KEY = 'naiton-lng'
-export const THEME_LOCALSTORAGE_KEY = 'naiton-theme'
-export const SIDEBAR_COLLAPSED_LOCALSTORAGE_KEY = 'naiton-sidebar-collapsed'
