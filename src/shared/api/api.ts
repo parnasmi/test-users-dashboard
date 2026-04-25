@@ -1,4 +1,5 @@
 import axios, { type AxiosError, type AxiosRequestConfig } from 'axios'
+import { toast } from 'sonner'
 import { env } from '@/shared/config/env'
 import { getRouteLogin } from '@/shared/config/routes'
 import { tokenStorage } from '@/shared/lib/tokenStorage'
@@ -24,6 +25,7 @@ instance.interceptors.response.use(
     if (error.response?.status === 401) {
       tokenStorage.clear()
       if (typeof window !== 'undefined' && window.location.pathname !== getRouteLogin()) {
+        toast.error('Session expired. Please log in again.')
         window.location.assign(getRouteLogin())
       }
     }
