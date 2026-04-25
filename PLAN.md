@@ -199,12 +199,24 @@ Each phase is self-contained — a fresh conversation can resume from any phase 
 
 ## Phase 3 — Auth: login page, RHF + zod, end-to-end verified
 
-- [ ] `entities/user/model/types.ts`: `User`, `AuthResponse` types (infer where possible).
-- [ ] `features/auth-by-credentials/model/schema.ts`: zod schema (`username` min 1, `password` min 1); export `LoginInput = z.infer<...>`.
-- [ ] `features/auth-by-credentials/api/login.ts`: `loginRequest(input): Promise<AuthResponse>` calling `POST /auth/login`.
-- [ ] `features/auth-by-credentials/ui/LoginForm.tsx`: shadcn `Form` + RHF + `zodResolver`; on submit → `loginRequest` → `tokenStorage.set` → store user (lightweight `currentUser` in lib or a slim context) → `navigate('/dashboard/users')`. Inline errors per-field; top-level error banner on 400; toast on network errors.
-- [ ] `pages/login/ui/LoginPage.tsx`: centered card; title; `LoginForm`; muted hint card showing `emilys / emilyspass`.
-- [ ] Verify end-to-end in dev server: bad creds show 400 banner; good creds redirect to `/dashboard/users` (placeholder route OK at this stage).
+- [x] `entities/user/model/types.ts`: `User`, `AuthResponse` types (infer where possible).
+- [x] `features/auth-by-credentials/model/schema.ts`: zod schema (`username` min 1, `password` min 1); export `LoginInput = z.infer<...>`.
+- [x] `features/auth-by-credentials/api/login.ts`: `loginRequest(input): Promise<AuthResponse>` calling `POST /auth/login`.
+- [x] `features/auth-by-credentials/ui/LoginForm.tsx`: shadcn `Form` + RHF + `zodResolver`; on submit → `loginRequest` → `tokenStorage.set` → store user (lightweight `currentUser` in lib or a slim context) → `navigate('/dashboard/users')`. Inline errors per-field; top-level error banner on 400; toast on network errors.
+- [x] `pages/login/ui/LoginPage.tsx`: centered card; title; `LoginForm`; muted hint card showing `emilys / emilyspass`.
+- [x] Verify end-to-end in dev server: bad creds show 400 banner; good creds redirect to `/dashboard/users` (placeholder route OK at this stage).
+
+### Files changed
+
+- `src/entities/user/model/types.ts` — Defined User and AuthResponse types.
+- `src/entities/user/index.ts` — Exported user types.
+- `src/features/auth-by-credentials/model/schema.ts` — Defined login validation schema.
+- `src/features/auth-by-credentials/api/login.ts` — Implemented login API request.
+- `src/features/auth-by-credentials/ui/LoginForm.tsx` — Built the login form with validation and auth logic.
+- `src/features/auth-by-credentials/index.ts` — Exported login feature components.
+- `src/pages/login/ui/LoginPage.tsx` — Built the login page UI.
+- `src/pages/login/index.ts` — Added default export for lazy loading.
+- `src/app/providers/router/routes.tsx` — Integrated real LoginPage with lazy loading.
 
 ## Phase 4 — Protected dashboard layout (sidebar + topbar)
 
