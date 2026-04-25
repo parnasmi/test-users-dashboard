@@ -128,16 +128,49 @@ Each phase is self-contained — a fresh conversation can resume from any phase 
 
 ## Phase 1 — FSD scaffolding & shared layer
 
-- [ ] Create empty FSD folders per "Final folder layout" above with `index.ts` placeholders where slices will export.
-- [ ] `shared/config/routes.ts`: enum + getter functions for `/login`, `/dashboard`, `/dashboard/users`, `/dashboard/users/:id`, `/dashboard/profile` (mirror `deps/shared/const/router.const.ts` style).
-- [ ] `shared/config/env.ts`: typed export of `VITE_API_BASE_URL` (default `https://dummyjson.com`).
-- [ ] `shared/lib/tokenStorage.ts`: interface `TokenStorage` with `get/set/clear`; default localStorage impl behind it (swappable). Keys live in one constants file.
-- [ ] `shared/lib/createSuspenseResource.ts` (or per-page promise helpers): tiny helper that creates a promise to be passed into a `use()`-consuming child. Plus a `cache` helper keyed on URL params to avoid refetch loops on rerender.
-- [ ] `shared/lib/cn.ts`: shadcn `cn` util (clsx + tailwind-merge).
-- [ ] `shared/api/api.ts`: single axios instance, `baseURL` from env. **Request interceptor** attaches `Authorization: Bearer ${token}` from `tokenStorage`. **Response interceptor**: on 401 → `tokenStorage.clear()` + `window.location.assign('/login')` (router-agnostic redirect since interceptor lives outside React tree).
-- [ ] `shared/api/endpoints.ts`: endpoint constants (`/auth/login`, `/auth/me`, `/users`, `/users/search`, `/users/:id`).
-- [ ] `shared/api/index.ts`: barrel.
-- [ ] Generate shadcn primitives that we know we'll need: `button`, `input`, `label`, `form`, `card`, `dropdown-menu`, `avatar`, `skeleton`, `sonner`, `sheet`, `tooltip`, `table`, `select`.
+- [x] Create empty FSD folders per "Final folder layout" above with `index.ts` placeholders where slices will export.
+- [x] `shared/config/routes.ts`: enum + getter functions for `/login`, `/dashboard`, `/dashboard/users`, `/dashboard/users/:id`, `/dashboard/profile` (mirror `deps/shared/const/router.const.ts` style).
+- [x] `shared/config/env.ts`: typed export of `VITE_API_BASE_URL` (default `https://dummyjson.com`).
+- [x] `shared/lib/tokenStorage.ts`: interface `TokenStorage` with `get/set/clear`; default localStorage impl behind it (swappable). Keys live in one constants file.
+- [x] `shared/lib/createSuspenseResource.ts` (or per-page promise helpers): tiny helper that creates a promise to be passed into a `use()`-consuming child. Plus a `cache` helper keyed on URL params to avoid refetch loops on rerender.
+- [x] `shared/lib/cn.ts`: shadcn `cn` util (clsx + tailwind-merge). _Kept as `shared/lib/utils.ts` (shadcn config alias points there); re-exported from `shared/lib/index.ts` so feature code can `import { cn } from '@/shared/lib'`._
+- [x] `shared/api/api.ts`: single axios instance, `baseURL` from env. **Request interceptor** attaches `Authorization: Bearer ${token}` from `tokenStorage`. **Response interceptor**: on 401 → `tokenStorage.clear()` + `window.location.assign('/login')` (router-agnostic redirect since interceptor lives outside React tree).
+- [x] `shared/api/endpoints.ts`: endpoint constants (`/auth/login`, `/auth/me`, `/users`, `/users/search`, `/users/:id`).
+- [x] `shared/api/index.ts`: barrel.
+- [x] Generate shadcn primitives that we know we'll need: `button`, `input`, `label`, `form`, `card`, `dropdown-menu`, `avatar`, `skeleton`, `sonner`, `sheet`, `tooltip`, `table`, `select`. _All except `form` were generated in Phase 0; `form` added now from `new-york-v4` style (radix-nova registry has no form entry)._
+
+### Files changed
+
+- `PLAN.md` — Marks Phase 1 complete and records the Phase 1 file inventory.
+- `package.json` — Adds `react-hook-form`, `@hookform/resolvers`, and `zod` (pulled in by the shadcn `form` component).
+- `package-lock.json` — Locks the new dependency graph.
+- `src/shared/ui/form.tsx` — Adds the shadcn Form primitive (RHF + Radix Slot/Label wrappers).
+- `src/shared/config/routes.ts` — Defines the `AppRoutes` enum and `getRouteLogin/Dashboard/Users/UserDetail/Profile` getters.
+- `src/shared/config/env.ts` — Exports the typed `env.API_BASE_URL` (defaults to `https://dummyjson.com`).
+- `src/shared/config/storage-keys.ts` — Centralizes localStorage key constants used by token storage and theme.
+- `src/shared/config/index.ts` — Barrels the config module exports.
+- `src/shared/lib/tokenStorage.ts` — Defines the swappable `TokenStorage` interface with a localStorage-backed default impl.
+- `src/shared/lib/createSuspenseResource.ts` — Adds `createPromiseCache` and `stableKey` helpers for `use()`-friendly request memoization.
+- `src/shared/lib/index.ts` — Barrels the lib module and re-exports `cn` from `utils.ts`.
+- `src/shared/api/api.ts` — Configures the axios instance with the Bearer request interceptor and the 401 redirect response interceptor.
+- `src/shared/api/endpoints.ts` — Lists dummyjson endpoint constants for auth and users.
+- `src/shared/api/index.ts` — Barrels the api module exports.
+- `src/pages/login/index.ts` — Slice barrel placeholder for the login page.
+- `src/pages/dashboard-layout/index.ts` — Slice barrel placeholder for the dashboard layout page.
+- `src/pages/users/index.ts` — Slice barrel placeholder for the users page.
+- `src/pages/user-detail/index.ts` — Slice barrel placeholder for the user detail page.
+- `src/pages/profile/index.ts` — Slice barrel placeholder for the profile page.
+- `src/pages/not-found/index.ts` — Slice barrel placeholder for the not-found page.
+- `src/widgets/sidebar/index.ts` — Slice barrel placeholder for the sidebar widget.
+- `src/widgets/topbar/index.ts` — Slice barrel placeholder for the topbar widget.
+- `src/widgets/users-table/index.ts` — Slice barrel placeholder for the users table widget.
+- `src/features/auth-by-credentials/index.ts` — Slice barrel placeholder for the credentials auth feature.
+- `src/features/logout/index.ts` — Slice barrel placeholder for the logout feature.
+- `src/features/theme-toggle/index.ts` — Slice barrel placeholder for the theme toggle feature.
+- `src/features/users-search/index.ts` — Slice barrel placeholder for the users search feature.
+- `src/features/users-pagination/index.ts` — Slice barrel placeholder for the users pagination feature.
+- `src/features/users-sort/index.ts` — Slice barrel placeholder for the users sort feature.
+- `src/entities/user/index.ts` — Slice barrel placeholder for the user entity.
 
 ## Phase 2 — App bootstrap, router, error & theme providers
 
