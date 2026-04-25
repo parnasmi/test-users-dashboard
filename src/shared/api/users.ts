@@ -14,7 +14,7 @@ export interface GetUsersParams {
 }
 
 export function fetchUsers(params: GetUsersParams): Promise<UsersResponse> {
-  const key = stableKey(params)
+  const key = stableKey(params as Record<string, unknown>)
   
   return usersCache.get(key, async () => {
     const { q, ...rest } = params

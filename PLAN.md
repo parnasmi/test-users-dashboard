@@ -289,9 +289,24 @@ Each phase is self-contained — a fresh conversation can resume from any phase 
 
 ## Phase 6 — User detail page
 
-- [ ] `pages/user-detail/ui/UserDetailPage.tsx`: param `:id` via `useParams` → `const promise = useMemo(() => getUserById(id), [id])` → `<Suspense fallback={<UserDetailSkeleton/>}><UserDetailContent promise={promise}/></Suspense>`.
-- [ ] `pages/user-detail/ui/UserDetailContent.tsx`: `use(promise)`, render avatar header + info grid (email/phone/age/role/birth date) + address card + company card + bank/crypto details.
-- [ ] Back link to `/dashboard/users` (preserve query state if cheap — nuqs handles).
+- [x] `pages/user-detail/ui/UserDetailPage.tsx`: param `:id` via `useParams` → `const promise = useMemo(() => getUserById(id), [id])` → `<Suspense fallback={<UserDetailSkeleton/>}><UserDetailContent promise={promise}/></Suspense>`.
+- [x] `pages/user-detail/ui/UserDetailContent.tsx`: `use(promise)`, render avatar header + info grid (email/phone/age/role/birth date) + address card + company card + bank/crypto details.
+- [x] Back link to `/dashboard/users` (preserve query state if cheap — nuqs handles).
+
+### Files changed
+
+- `src/entities/user/model/types.ts` — Expanded `User` type with full profile fields from dummyjson.
+- `src/pages/user-detail/ui/UserDetailSkeleton.tsx` — Created skeleton loading state for the user detail page.
+- `src/pages/user-detail/ui/UserDetailContent.tsx` — Built the user detail content component using React 19 `use()`.
+- `src/pages/user-detail/ui/UserDetailPage.tsx` — Implemented the user detail page with data fetching and "Back" navigation.
+- `src/pages/user-detail/index.ts` — Exported `UserDetailPage` as default for lazy loading.
+- `src/app/providers/router/routes.tsx` — Integrated the real `UserDetailPage` into the router and removed unused imports.
+- `src/shared/ui/badge.tsx` — Added shadcn Badge primitive.
+- `src/app/providers/ErrorBoundary.tsx` — Fixed TypeScript `override` modifier errors.
+- `src/shared/api/users.ts` — Fixed type error in `stableKey` usage.
+- `src/features/users-sort/lib/useSortQuery.ts` — Removed unused `SortOrder` type.
+- `src/pages/users/ui/UsersPage.tsx` — Removed unused `UsersTable` import.
+- `src/widgets/users-table/ui/UsersTable.tsx` — Removed unused variables and arguments in table columns.
 
 ## Phase 7 — Profile page
 

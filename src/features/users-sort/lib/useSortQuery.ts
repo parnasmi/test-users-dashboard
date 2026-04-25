@@ -1,7 +1,6 @@
 import { useQueryStates, parseAsStringLiteral } from 'nuqs'
 
 const sortOrderValues = ['asc', 'desc'] as const
-type SortOrder = (typeof sortOrderValues)[number]
 
 export function useSortQuery() {
   const [{ sortBy, order }, setSort] = useQueryStates({
