@@ -1,11 +1,21 @@
-function App() {
+import { BrowserRouter } from 'react-router'
+import { NuqsAdapter } from 'nuqs/adapters/react-router/v7'
+import { ThemeProvider } from '@/app/providers/ThemeProvider'
+import { ErrorBoundary } from '@/app/providers/ErrorBoundary'
+import { AppRouter } from '@/app/providers/router'
+import { Toaster } from '@/shared/ui/sonner'
+
+export default function App() {
   return (
-    <main className="flex min-h-svh items-center justify-center bg-background p-6 text-foreground">
-      <div className="rounded-lg bg-primary px-6 py-4 text-primary-foreground shadow-sm">
-        Tailwind v4 is compiling.
-      </div>
-    </main>
+    <ErrorBoundary>
+      <BrowserRouter>
+        <ThemeProvider defaultTheme="system">
+          <NuqsAdapter>
+            <AppRouter />
+          </NuqsAdapter>
+          <Toaster position="bottom-right" />
+        </ThemeProvider>
+      </BrowserRouter>
+    </ErrorBoundary>
   )
 }
-
-export default App
