@@ -45,41 +45,41 @@ export function UsersTable({ users }: UsersTableProps) {
       {
         accessorFn: (row) => `${row.firstName} ${row.lastName}`,
         id: 'firstName',
-        header: ({ column }) => (
+        header: () => (
           <SortButton label="Name" sortKey="firstName" />
         ),
       },
       {
         accessorKey: 'email',
-        header: ({ column }) => (
+        header: () => (
           <SortButton label="Email" sortKey="email" />
         ),
         cell: ({ row }) => <span className="hidden md:inline">{row.original.email}</span>,
       },
       {
         accessorKey: 'phone',
-        header: ({ column }) => (
+        header: () => (
           <SortButton label="Phone" sortKey="phone" />
         ),
         cell: ({ row }) => <span className="hidden lg:inline">{row.original.phone}</span>,
       },
       {
         accessorKey: 'age',
-        header: ({ column }) => (
+        header: () => (
           <SortButton label="Age" sortKey="age" />
         ),
       },
       {
         accessorFn: (row) => row.company.name,
         id: 'company.name',
-        header: ({ column }) => (
+        header: () => (
           <SortButton label="Company" sortKey="company.name" />
         ),
         cell: ({ row }) => <span className="hidden xl:inline">{row.original.company.name}</span>,
       },
       {
         accessorKey: 'role',
-        header: ({ column }) => (
+        header: () => (
           <SortButton label="Role" sortKey="role" />
         ),
       },
@@ -137,11 +137,6 @@ export function UsersTable({ users }: UsersTableProps) {
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
-                const isHiddenOnMobile = 
-                  header.id === 'email' || 
-                  header.id === 'phone' || 
-                  header.id === 'company.name'
-                
                 return (
                   <TableHead 
                     key={header.id}

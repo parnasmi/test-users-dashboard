@@ -3,7 +3,7 @@ import { useQueryStates, parseAsInteger, parseAsString, parseAsStringLiteral } f
 
 import { fetchUsers } from '@/shared/api'
 import { UsersSearch } from '@/features/users-search'
-import { TableSkeleton, UsersTable } from '@/widgets/users-table'
+import { TableSkeleton } from '@/widgets/users-table'
 import { ErrorBoundary } from '@/app/providers/ErrorBoundary'
 import { UsersTableData } from './UsersTableData'
 

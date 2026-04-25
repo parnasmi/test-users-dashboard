@@ -1,4 +1,4 @@
-import { Navigate, Outlet } from 'react-router'
+import { Navigate } from 'react-router'
 import type { ReactNode } from 'react'
 import {
   getRouteLogin,
@@ -22,9 +22,7 @@ import { DashboardLayout } from '@/pages/dashboard-layout'
 
 import { UsersPage } from '@/pages/users'
 
-function UserDetailPagePlaceholder() {
-  return <div className="text-muted-foreground">User Detail Page — Phase 6</div>
-}
+const UserDetailPage = lazy(() => import('@/pages/user-detail'))
 
 function ProfilePagePlaceholder() {
   return <div className="text-muted-foreground">Profile Page — Phase 7</div>
@@ -72,7 +70,7 @@ export const routeTree: RouteConfig[] = [
       },
       {
         path: getRouteUserDetailPattern(),
-        element: <UserDetailPagePlaceholder />,
+        element: <UserDetailPage />,
       },
       {
         path: getRouteProfile(),
