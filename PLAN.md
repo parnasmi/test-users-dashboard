@@ -98,7 +98,6 @@ Each phase is self-contained — a fresh conversation can resume from any phase 
 - [x] Create `src/app/styles/index.css` with `@import "tailwindcss";` + `@theme { ... }` block defining color tokens (background, foreground, primary, muted, border, ring, radius, font) and dark-mode variant.
 - [x] Drop a `bg-primary text-primary-foreground` div in `App.tsx` and run `npm run dev` to verify Tailwind v4 actually compiles before any other UI work. Hard gate.
 - [x] Init shadcn CLI (`npx shadcn@latest init`) targeting `src/shared/ui` and configuring `@/` alias. Generate `button` as smoke test.
-- [ ] Commit: `chore: scaffold vite + react 19 + ts + tailwind v4 + shadcn`.
 
 ### Files changed
 
@@ -139,7 +138,6 @@ Each phase is self-contained — a fresh conversation can resume from any phase 
 - [ ] `shared/api/endpoints.ts`: endpoint constants (`/auth/login`, `/auth/me`, `/users`, `/users/search`, `/users/:id`).
 - [ ] `shared/api/index.ts`: barrel.
 - [ ] Generate shadcn primitives that we know we'll need: `button`, `input`, `label`, `form`, `card`, `dropdown-menu`, `avatar`, `skeleton`, `sonner`, `sheet`, `tooltip`, `table`, `select`.
-- [ ] Commit: `feat(shared): api instance, token storage, route constants, shadcn primitives`.
 
 ## Phase 2 — App bootstrap, router, error & theme providers
 
@@ -151,7 +149,6 @@ Each phase is self-contained — a fresh conversation can resume from any phase 
 - [ ] `app/providers/router/RequireAuth.tsx`: read `tokenStorage`; `<Navigate to="/login" replace />` if no token; otherwise `<Outlet />`.
 - [ ] `app/providers/router/routes.tsx`: route tree — `/login` (public), `/dashboard` (protected, layout) → `users`, `users/:id`, `profile`; `/` redirects to `/dashboard/users`; `*` → NotFound.
 - [ ] Wire `nuqs` `<NuqsAdapter>` (react-router adapter) high in the tree.
-- [ ] Commit: `feat(app): router, providers, error boundary, theme`.
 
 ## Phase 3 — Auth: login page, RHF + zod, end-to-end verified
 
@@ -161,7 +158,6 @@ Each phase is self-contained — a fresh conversation can resume from any phase 
 - [ ] `features/auth-by-credentials/ui/LoginForm.tsx`: shadcn `Form` + RHF + `zodResolver`; on submit → `loginRequest` → `tokenStorage.set` → store user (lightweight `currentUser` in lib or a slim context) → `navigate('/dashboard/users')`. Inline errors per-field; top-level error banner on 400; toast on network errors.
 - [ ] `pages/login/ui/LoginPage.tsx`: centered card; title; `LoginForm`; muted hint card showing `emilys / emilyspass`.
 - [ ] Verify end-to-end in dev server: bad creds show 400 banner; good creds redirect to `/dashboard/users` (placeholder route OK at this stage).
-- [ ] Commit: `feat(auth): login page with rhf + zod, token persistence`.
 
 ## Phase 4 — Protected dashboard layout (sidebar + topbar)
 
@@ -173,7 +169,6 @@ Each phase is self-contained — a fresh conversation can resume from any phase 
 - [ ] `pages/dashboard-layout/ui/DashboardLayout.tsx`: CSS-grid shell — sidebar (left, hidden on mobile) + main column (topbar + `<Outlet />`). Use CSS vars `--topbar-height` / `--sidebar-width` per `deps` convention.
 - [ ] Wire `RequireAuth` → `DashboardLayout` in routes config.
 - [ ] Verify: post-login lands in shell; logout clears token + redirects; dropdown is keyboard-navigable.
-- [ ] Commit: `feat(dashboard): protected layout, sidebar, topbar, logout, theme toggle`.
 
 ## Phase 5 — Users page (TanStack Table, nuqs, use() + Suspense)
 
@@ -188,19 +183,16 @@ Each phase is self-contained — a fresh conversation can resume from any phase 
 - [ ] `pages/users/ui/UsersTableData.tsx`: calls `use(promise)` and renders `UsersTable`.
 - [ ] Empty state when search returns 0 rows.
 - [ ] Verify in browser: pagination, search debounced via transition (URL updates without input lag), column sort toggles, deep-link `?q=foo&page=2&sortBy=email&order=asc` loads the correct view, row click navigates.
-- [ ] Commit: `feat(users): tanstack table, nuqs url state, use() + suspense fetching`.
 
 ## Phase 6 — User detail page
 
 - [ ] `pages/user-detail/ui/UserDetailPage.tsx`: param `:id` via `useParams` → `const promise = useMemo(() => getUserById(id), [id])` → `<Suspense fallback={<UserDetailSkeleton/>}><UserDetailContent promise={promise}/></Suspense>`.
 - [ ] `pages/user-detail/ui/UserDetailContent.tsx`: `use(promise)`, render avatar header + info grid (email/phone/age/role/birth date) + address card + company card + bank/crypto details.
 - [ ] Back link to `/dashboard/users` (preserve query state if cheap — nuqs handles).
-- [ ] Commit: `feat(users): user detail page`.
 
 ## Phase 7 — Profile page
 
 - [ ] `pages/profile/ui/ProfilePage.tsx`: same `use()` pattern fetching `GET /auth/me`. Reuse `UserDetailContent` layout primitives where they fit.
-- [ ] Commit: `feat(profile): profile page using /auth/me`.
 
 ## Phase 8 — Polish, accessibility, responsiveness
 
@@ -210,13 +202,11 @@ Each phase is self-contained — a fresh conversation can resume from any phase 
 - [ ] Verify mobile breakpoints: sidebar collapses to `Sheet`, table scrolls horizontally if cramped.
 - [ ] Verify dark mode flips entire app (no hardcoded light-mode colors).
 - [ ] Confirm 401 from any endpoint redirects to `/login` with a toast.
-- [ ] Commit: `chore: a11y, responsive polish, empty states`.
 
 ## Phase 9 — README & docs
 
 - [ ] `README.md` covering: launch (`npm i` / `npm run dev` / `npm run build`); stack & versions table; architecture decisions (FSD; `use()` over TanStack Query — smaller surface, brief asked for `use`; `useTransition` debounce — no extra dep, native React 19 idiom; nuqs — URL-as-state for shareable views); trade-offs left for later (tests, virtualization for large lists, optimistic updates, error retry strategies); test creds (`emilys / emilyspass`); link to dummyjson docs.
 - [ ] `docs/screenshots/` placeholder folder + `.gitkeep`; reference paths from README.
-- [ ] Commit: `docs: thorough readme + screenshots placeholders`.
 
 ---
 
