@@ -15,11 +15,11 @@ import {
   User as UserIcon
 } from 'lucide-react'
 
-interface UserDetailContentProps {
+interface UserProfileProps {
   promise: Promise<User>
 }
 
-export function UserDetailContent({ promise }: UserDetailContentProps) {
+export function UserProfile({ promise }: UserProfileProps) {
   const user = use(promise)
 
   return (

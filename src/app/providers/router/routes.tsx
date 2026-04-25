@@ -23,10 +23,7 @@ import { DashboardLayout } from '@/pages/dashboard-layout'
 import { UsersPage } from '@/pages/users'
 
 const UserDetailPage = lazy(() => import('@/pages/user-detail'))
-
-function ProfilePagePlaceholder() {
-  return <div className="text-muted-foreground">Profile Page — Phase 7</div>
-}
+const ProfilePage = lazy(() => import('@/pages/profile'))
 
 function NotFoundPage() {
   return (
@@ -74,7 +71,7 @@ export const routeTree: RouteConfig[] = [
       },
       {
         path: getRouteProfile(),
-        element: <ProfilePagePlaceholder />,
+        element: <ProfilePage />,
       },
     ],
   },
