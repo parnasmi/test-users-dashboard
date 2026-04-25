@@ -15,16 +15,9 @@ export type RouteConfig = {
   children?: RouteConfig[]
 }
 
-// Placeholder page components — will be replaced with real lazy imports in later phases
-function LoginPagePlaceholder() {
-  return (
-    <div className="flex min-h-svh items-center justify-center bg-background p-6">
-      <div className="rounded-lg bg-card px-6 py-4 text-card-foreground ring-1 ring-foreground/10">
-        Login Page — Phase 3
-      </div>
-    </div>
-  )
-}
+import { lazy } from 'react'
+
+const LoginPage = lazy(() => import('@/pages/login'))
 
 function DashboardLayoutPlaceholder() {
   return (
@@ -80,7 +73,7 @@ export const routeTree: RouteConfig[] = [
   // Public routes
   {
     path: getRouteLogin(),
-    element: <LoginPagePlaceholder />,
+    element: <LoginPage />,
   },
   // Protected routes (wrapped in RequireAuth via AppRouter)
   {
