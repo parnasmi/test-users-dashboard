@@ -36,7 +36,7 @@ export default function UsersPage() {
 
       <ErrorBoundary>
         <Suspense fallback={<TableSkeleton />}>
-          <UsersTablGeData promise={promise} />
+          <UsersTableData promise={promise} />
         </Suspense>
       </ErrorBoundary>
     </div>
