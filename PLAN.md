@@ -254,17 +254,38 @@ Each phase is self-contained — a fresh conversation can resume from any phase 
 
 ## Phase 5 — Users page (TanStack Table, nuqs, use() + Suspense)
 
-- [ ] `entities/user/ui/UserAvatar.tsx`: shadcn `Avatar` with image + initials fallback.
-- [ ] `shared/api/users.ts`: `getUsers({ limit, skip, sortBy, order })`, `searchUsers({ q, limit, skip, sortBy, order })`. Both return `{ users, total, skip, limit }`. Include a small in-memory cache keyed by serialized params so re-renders don't refetch identical promises (required for `use()` to be stable).
-- [ ] `features/users-search/ui/UsersSearch.tsx`: shadcn `Input`; `useTransition`; on change, `startTransition(() => setQ(value))` where `setQ` writes to nuqs URL state. Surface `isPending` as a subtle spinner inside the input.
-- [ ] `features/users-pagination/ui/UsersPagination.tsx`: page controls + page-size `Select` (10/25/50). State via nuqs `useQueryStates({ page: parseAsInteger.withDefault(1), pageSize: parseAsInteger.withDefault(10) })`.
-- [ ] `features/users-sort/lib/useSortQuery.ts`: nuqs `sortBy` + `order` (`asc` | `desc`). Helper to toggle on header click.
-- [ ] `widgets/users-table/ui/UsersTable.tsx`: TanStack Table; columns — avatar+name, email, phone, age, company.name, role; tooltips on truncated cells; clickable header buttons (real `<button>`s) calling sort helper; row click `navigate(/dashboard/users/:id)`.
-- [ ] `widgets/users-table/ui/TableSkeleton.tsx`: rows of shadcn `Skeleton` matching final layout.
-- [ ] `pages/users/ui/UsersPage.tsx`: read URL state via nuqs → build params → `const promise = useMemo(() => fetchUsers(params), [params])` → render `<Suspense fallback={<TableSkeleton/>}><UsersTableData promise={promise} /></Suspense>` wrapped in `<ErrorBoundary>`. Search input lives outside Suspense.
-- [ ] `pages/users/ui/UsersTableData.tsx`: calls `use(promise)` and renders `UsersTable`.
-- [ ] Empty state when search returns 0 rows.
-- [ ] Verify in browser: pagination, search debounced via transition (URL updates without input lag), column sort toggles, deep-link `?q=foo&page=2&sortBy=email&order=asc` loads the correct view, row click navigates.
+- [x] `entities/user/ui/UserAvatar.tsx`: shadcn `Avatar` with image + initials fallback.
+- [x] `shared/api/users.ts`: `getUsers({ limit, skip, sortBy, order })`, `searchUsers({ q, limit, skip, sortBy, order })`. Both return `{ users, total, skip, limit }`. Include a small in-memory cache keyed by serialized params so re-renders don't refetch identical promises (required for `use()` to be stable).
+- [x] `features/users-search/ui/UsersSearch.tsx`: shadcn `Input`; `useTransition`; on change, `startTransition(() => setQ(value))` where `setQ` writes to nuqs URL state. Surface `isPending` as a subtle spinner inside the input.
+- [x] `features/users-pagination/ui/UsersPagination.tsx`: page controls + page-size `Select` (10/25/50). State via nuqs `useQueryStates({ page: parseAsInteger.withDefault(1), pageSize: parseAsInteger.withDefault(10) })`.
+- [x] `features/users-sort/lib/useSortQuery.ts`: nuqs `sortBy` + `order` (`asc` | `desc`). Helper to toggle on header click.
+- [x] `widgets/users-table/ui/UsersTable.tsx`: TanStack Table; columns — avatar+name, email, phone, age, company.name, role; tooltips on truncated cells; clickable header buttons (real `<button>`s) calling sort helper; row click `navigate(/dashboard/users/:id)`.
+- [x] `widgets/users-table/ui/TableSkeleton.tsx`: rows of shadcn `Skeleton` matching final layout.
+- [x] `pages/users/ui/UsersPage.tsx`: read URL state via nuqs → build params → `const promise = useMemo(() => fetchUsers(params), [params])` → render `<Suspense fallback={<TableSkeleton/>}><UsersTableData promise={promise} /></Suspense>` wrapped in `<ErrorBoundary>`. Search input lives outside Suspense.
+- [x] `pages/users/ui/UsersTableData.tsx`: calls `use(promise)` and renders `UsersTable`.
+- [x] Empty state when search returns 0 rows.
+- [x] Verify in browser: pagination, search debounced via transition (URL updates without input lag), column sort toggles, deep-link `?q=foo&page=2&sortBy=email&order=asc` loads the correct view, row click navigates.
+
+### Files changed
+
+- `src/entities/user/model/types.ts` — Expanded `User` type and added `UsersResponse`.
+- `src/entities/user/ui/UserAvatar.tsx` — Created user avatar component with initials fallback.
+- `src/entities/user/index.ts` — Exported `UserAvatar`.
+- `src/shared/api/users.ts` — Implemented user fetching with in-memory caching for `use()` hook stability.
+- `src/shared/api/index.ts` — Exported user API functions.
+- `src/features/users-search/ui/UsersSearch.tsx` — Built search feature with `useTransition` and `nuqs`.
+- `src/features/users-search/index.ts` — Exported `UsersSearch`.
+- `src/features/users-pagination/ui/UsersPagination.tsx` — Built pagination feature with `nuqs`.
+- `src/features/users-pagination/index.ts` — Exported `UsersPagination`.
+- `src/features/users-sort/lib/useSortQuery.ts` — Implemented sort state management with `nuqs`.
+- `src/features/users-sort/index.ts` — Exported `useSortQuery`.
+- `src/widgets/users-table/ui/UsersTable.tsx` — Built the users table using TanStack Table v8.
+- `src/widgets/users-table/ui/TableSkeleton.tsx` — Built the skeleton loading state for the table.
+- `src/widgets/users-table/index.ts` — Exported table components.
+- `src/pages/users/ui/UsersPage.tsx` — Implemented the users page with URL state sync and Suspense.
+- `src/pages/users/ui/UsersTableData.tsx` — Created the data-consuming component using React 19 `use()`.
+- `src/pages/users/index.ts` — Exported `UsersPage` as lazy component.
+- `src/app/providers/router/routes.tsx` — Integrated the real `UsersPage` into the router.
 
 ## Phase 6 — User detail page
 

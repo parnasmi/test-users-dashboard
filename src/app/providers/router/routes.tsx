@@ -20,9 +20,7 @@ import { lazy } from 'react'
 const LoginPage = lazy(() => import('@/pages/login'))
 import { DashboardLayout } from '@/pages/dashboard-layout'
 
-function UsersPagePlaceholder() {
-  return <div className="text-muted-foreground">Users Page — Phase 5</div>
-}
+import { UsersPage } from '@/pages/users'
 
 function UserDetailPagePlaceholder() {
   return <div className="text-muted-foreground">User Detail Page — Phase 6</div>
@@ -70,7 +68,7 @@ export const routeTree: RouteConfig[] = [
       },
       {
         path: getRouteUsers(),
-        element: <UsersPagePlaceholder />,
+        element: <UsersPage />,
       },
       {
         path: getRouteUserDetailPattern(),
