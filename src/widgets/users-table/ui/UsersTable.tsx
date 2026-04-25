@@ -162,8 +162,17 @@ export function UsersTable({ users }: UsersTableProps) {
           {table.getRowModel().rows.map((row) => (
             <TableRow
               key={row.id}
-              className="cursor-pointer transition-colors hover:bg-muted/50"
+              className="cursor-pointer transition-colors hover:bg-muted/50 focus-visible:bg-muted focus-visible:outline-none"
               onClick={() => navigate(getRouteUserDetail(row.original.id))}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault()
+                  navigate(getRouteUserDetail(row.original.id))
+                }
+              }}
+              tabIndex={0}
+              role="link"
+              aria-label={`View details for ${row.original.firstName} ${row.original.lastName}`}
             >
               {row.getVisibleCells().map((cell) => (
                 <TableCell 
