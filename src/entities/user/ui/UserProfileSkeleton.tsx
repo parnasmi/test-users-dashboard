@@ -1,7 +1,7 @@
 import { Skeleton } from '@/shared/ui/skeleton'
 import { Card, CardContent, CardHeader } from '@/shared/ui/card'
 
-export function UserDetailSkeleton() {
+export function UserProfileSkeleton() {
   return (
     <div className="space-y-6">
       {/* Header Skeleton */}

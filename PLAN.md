@@ -310,7 +310,18 @@ Each phase is self-contained — a fresh conversation can resume from any phase 
 
 ## Phase 7 — Profile page
 
-- [ ] `pages/profile/ui/ProfilePage.tsx`: same `use()` pattern fetching `GET /auth/me`. Reuse `UserDetailContent` layout primitives where they fit.
+- [x] `pages/profile/ui/ProfilePage.tsx`: same `use()` pattern fetching `GET /auth/me`. Reuse `UserDetailContent` layout primitives where they fit.
+
+### Files changed
+
+- `src/shared/api/users.ts` — Added `fetchMe` function to fetch current user data.
+- `src/entities/user/ui/UserProfile.tsx` — Created by moving and renaming `UserDetailContent.tsx` for reuse.
+- `src/entities/user/ui/UserProfileSkeleton.tsx` — Created by moving and renaming `UserDetailSkeleton.tsx` for reuse.
+- `src/entities/user/index.ts` — Exported new UI components.
+- `src/pages/user-detail/ui/UserDetailPage.tsx` — Updated to use refactored components from entities.
+- `src/pages/profile/ui/ProfilePage.tsx` — Built the profile page using shared user profile components.
+- `src/pages/profile/index.ts` — Exported `ProfilePage` for lazy loading.
+- `src/app/providers/router/routes.tsx` — Integrated real `ProfilePage` and cleaned up placeholders.
 
 ## Phase 8 — Polish, accessibility, responsiveness
 

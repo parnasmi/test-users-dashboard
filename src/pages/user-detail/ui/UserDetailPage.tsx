@@ -5,8 +5,7 @@ import { fetchUserById } from '@/shared/api/users'
 import { getRouteUsers } from '@/shared/config'
 import { Button } from '@/shared/ui/button'
 import { ErrorBoundary } from '@/app/providers/ErrorBoundary'
-import { UserDetailContent } from './UserDetailContent'
-import { UserDetailSkeleton } from './UserDetailSkeleton'
+import { UserProfile, UserProfileSkeleton } from '@/entities/user'
 
 export function UserDetailPage() {
   const { id } = useParams<{ id: string }>()
@@ -28,8 +27,8 @@ export function UserDetailPage() {
       </div>
 
       <ErrorBoundary>
-        <Suspense fallback={<UserDetailSkeleton />}>
-          <UserDetailContent promise={promise} />
+        <Suspense fallback={<UserProfileSkeleton />}>
+          <UserProfile promise={promise} />
         </Suspense>
       </ErrorBoundary>
     </div>

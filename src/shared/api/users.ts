@@ -38,3 +38,11 @@ export function fetchUserById(id: string | number): Promise<User> {
     return api.get<User>(endpoints.USER_BY_ID(id))
   })
 }
+
+export function fetchMe(): Promise<User> {
+  const key = 'me'
+  
+  return userByIdCache.get(key, () => {
+    return api.get<User>(endpoints.AUTH_ME)
+  })
+}
