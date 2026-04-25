@@ -91,14 +91,41 @@ Each phase is self-contained — a fresh conversation can resume from any phase 
 
 ## Phase 0 — Project init & Tailwind v4 verified compile
 
-- [ ] Scaffold Vite + React 19 + TS template (`npm create vite@latest . -- --template react-ts`).
-- [ ] Pin React 19 + TS strict in `tsconfig.json` (`strict: true`, `noUncheckedIndexedAccess`, `noImplicitOverride`).
-- [ ] Add path alias `@/* → src/*` to `tsconfig.json` AND `vite.config.ts` (via `vite-tsconfig-paths` or manual `resolve.alias`).
-- [ ] Install Tailwind v4: `npm i -D tailwindcss @tailwindcss/postcss postcss autoprefixer`. Create `postcss.config.mjs` with `@tailwindcss/postcss`. **Do NOT create `tailwind.config.js`.**
-- [ ] Create `src/app/styles/index.css` with `@import "tailwindcss";` + `@theme { ... }` block defining color tokens (background, foreground, primary, muted, border, ring, radius, font) and dark-mode variant.
-- [ ] Drop a `bg-primary text-primary-foreground` div in `App.tsx` and run `npm run dev` to verify Tailwind v4 actually compiles before any other UI work. Hard gate.
-- [ ] Init shadcn CLI (`npx shadcn@latest init`) targeting `src/shared/ui` and configuring `@/` alias. Generate `button` as smoke test.
+- [x] Scaffold Vite + React 19 + TS template (`npm create vite@latest . -- --template react-ts`).
+- [x] Pin React 19 + TS strict in `tsconfig.json` (`strict: true`, `noUncheckedIndexedAccess`, `noImplicitOverride`).
+- [x] Add path alias `@/* → src/*` to `tsconfig.json` AND `vite.config.ts` (via `vite-tsconfig-paths` or manual `resolve.alias`).
+- [x] Install Tailwind v4: `npm i -D tailwindcss @tailwindcss/postcss postcss autoprefixer`. Create `postcss.config.mjs` with `@tailwindcss/postcss`. **Do NOT create `tailwind.config.js`.**
+- [x] Create `src/app/styles/index.css` with `@import "tailwindcss";` + `@theme { ... }` block defining color tokens (background, foreground, primary, muted, border, ring, radius, font) and dark-mode variant.
+- [x] Drop a `bg-primary text-primary-foreground` div in `App.tsx` and run `npm run dev` to verify Tailwind v4 actually compiles before any other UI work. Hard gate.
+- [x] Init shadcn CLI (`npx shadcn@latest init`) targeting `src/shared/ui` and configuring `@/` alias. Generate `button` as smoke test.
 - [ ] Commit: `chore: scaffold vite + react 19 + ts + tailwind v4 + shadcn`.
+
+### Files changed
+
+- `PLAN.md` — Marks Phase 0 complete and records the Phase 0 file inventory.
+- `package.json` — Adds Vite scripts, React 19 dependencies, Tailwind v4, and shadcn component dependencies.
+- `package-lock.json` — Locks the installed npm dependency graph.
+- `index.html` — Adds the Vite HTML shell that mounts the React root.
+- `vite.config.ts` — Enables the React plugin and maps `@` to `src`.
+- `tsconfig.json` — Adds strict project settings and the `@/*` path alias.
+- `tsconfig.app.json` — Applies strict app TypeScript settings and the `@/*` path alias.
+- `tsconfig.node.json` — Applies strict Node/Vite TypeScript settings and the `@/*` path alias.
+- `eslint.config.js` — Adds Vite ESLint defaults plus a scoped override for generated shadcn UI exports.
+- `postcss.config.mjs` — Wires Tailwind v4 through `@tailwindcss/postcss` with autoprefixer.
+- `components.json` — Configures shadcn for Vite, Radix, Tailwind v4, and `src/shared/ui`.
+- `README.md` — Adds the default Vite scaffold README placeholder.
+- `public/favicon.svg` — Adds the Vite scaffold favicon.
+- `public/icons.svg` — Adds the Vite scaffold icon sprite.
+- `src/main.tsx` — Bootstraps React 19 and imports `src/app/styles/index.css`.
+- `src/App.tsx` — Adds the Tailwind compile smoke UI using `bg-primary text-primary-foreground`.
+- `src/App.css` — Adds Vite scaffold component CSS, currently unused by the smoke app.
+- `src/index.css` — Adds Vite scaffold global CSS, superseded by `src/app/styles/index.css`.
+- `src/app/styles/index.css` — Defines Tailwind v4 imports, theme tokens, dark variant, and shadcn CSS variables.
+- `src/assets/hero.png` — Adds a Vite scaffold image asset.
+- `src/assets/react.svg` — Adds the Vite scaffold React logo asset.
+- `src/assets/vite.svg` — Adds the Vite scaffold Vite logo asset.
+- `src/shared/lib/utils.ts` — Adds the shadcn `cn` helper required by generated components.
+- `src/shared/ui/button.tsx` — Adds the shadcn Button component as the Phase 0 smoke test.
 
 ## Phase 1 — FSD scaffolding & shared layer
 
