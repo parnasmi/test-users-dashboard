@@ -174,14 +174,28 @@ Each phase is self-contained — a fresh conversation can resume from any phase 
 
 ## Phase 2 — App bootstrap, router, error & theme providers
 
-- [ ] `src/main.tsx`: createRoot + StrictMode + `<App />`. Import `app/styles/index.css`.
-- [ ] `src/App.tsx`: compose providers — `<ThemeProvider><Toaster /><BrowserRouter><AppRouter /></BrowserRouter></ThemeProvider>` wrapped in a global `<ErrorBoundary>`.
-- [ ] `app/providers/ErrorBoundary.tsx`: class component with shadcn-styled fallback (card + retry button).
-- [ ] `app/providers/ThemeProvider.tsx`: class-based dark mode (`document.documentElement.classList.add('dark')`); persist in localStorage; expose `useTheme()`.
-- [ ] `app/providers/router/AppRouter.tsx`: `<Routes>` mapping route config; wrap each route element in per-route `<Suspense fallback={<RouteSkeleton />}>`.
-- [ ] `app/providers/router/RequireAuth.tsx`: read `tokenStorage`; `<Navigate to="/login" replace />` if no token; otherwise `<Outlet />`.
-- [ ] `app/providers/router/routes.tsx`: route tree — `/login` (public), `/dashboard` (protected, layout) → `users`, `users/:id`, `profile`; `/` redirects to `/dashboard/users`; `*` → NotFound.
-- [ ] Wire `nuqs` `<NuqsAdapter>` (react-router adapter) high in the tree.
+- [x] `src/main.tsx`: createRoot + StrictMode + `<App />`. Import `app/styles/index.css`.
+- [x] `src/App.tsx`: compose providers — `<ThemeProvider><Toaster /><BrowserRouter><AppRouter /></BrowserRouter></ThemeProvider>` wrapped in a global `<ErrorBoundary>`.
+- [x] `app/providers/ErrorBoundary.tsx`: class component with shadcn-styled fallback (card + retry button).
+- [x] `app/providers/ThemeProvider.tsx`: class-based dark mode (`document.documentElement.classList.add('dark')`); persist in localStorage; expose `useTheme()`.
+- [x] `app/providers/router/AppRouter.tsx`: `<Routes>` mapping route config; wrap each route element in per-route `<Suspense fallback={<RouteSkeleton />}>`.
+- [x] `app/providers/router/RequireAuth.tsx`: read `tokenStorage`; `<Navigate to="/login" replace />` if no token; otherwise `<Outlet />`.
+- [x] `app/providers/router/routes.tsx`: route tree — `/login` (public), `/dashboard` (protected, layout) → `users`, `users/:id`, `profile`; `/` redirects to `/dashboard/users`; `*` → NotFound.
+- [x] Wire `nuqs` `<NuqsAdapter>` (react-router adapter) high in the tree.
+
+### Files changed
+
+- `package.json` — Adds `react-router` and `nuqs` dependencies; removes unused `next-themes`.
+- `package-lock.json` — Locks the updated dependency graph.
+- `src/App.tsx` — Composes the full provider tree: ErrorBoundary → BrowserRouter → ThemeProvider → NuqsAdapter → AppRouter + Toaster.
+- `src/app/providers/ThemeProvider.tsx` — Class-based dark mode provider with localStorage persistence and `useTheme()` hook; replaces `next-themes`.
+- `src/app/providers/ErrorBoundary.tsx` — React class-component error boundary with a shadcn-styled fallback card and retry button.
+- `src/app/providers/router/AppRouter.tsx` — Renders the route tree with per-route Suspense fallbacks and RequireAuth wrapping for protected routes.
+- `src/app/providers/router/RequireAuth.tsx` — Route guard that checks tokenStorage and redirects to /login if no access token is present.
+- `src/app/providers/router/RouteSkeleton.tsx` — Generic skeleton fallback rendered inside each route's Suspense boundary.
+- `src/app/providers/router/routes.tsx` — Declarative route tree with placeholder page components; defines public, protected, and catch-all routes.
+- `src/app/providers/router/index.ts` — Barrel export for the router provider module.
+- `src/shared/ui/sonner.tsx` — Replaced `next-themes` useTheme import with the custom ThemeProvider's useTheme.
 
 ## Phase 3 — Auth: login page, RHF + zod, end-to-end verified
 
