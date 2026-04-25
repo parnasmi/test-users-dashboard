@@ -1,1 +1,1 @@
-export {}
+export { UsersSearch } from './ui/UsersSearch'

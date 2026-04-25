@@ -1,1 +1,1 @@
-export {}
+export { UsersPagination } from './ui/UsersPagination'
