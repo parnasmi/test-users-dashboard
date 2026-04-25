@@ -15,7 +15,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/shared/ui/form'
-import { tokenStorage } from '@/shared/lib'
+import { tokenStorage, userStorage } from '@/shared/lib'
 import { getRouteUsers } from '@/shared/config'
 
 import { loginSchema, type LoginInput } from '../model/schema'
@@ -47,13 +47,12 @@ export function LoginForm() {
       })
 
       // Store user info (simplified as per plan)
-      localStorage.setItem('users-dashboard-current-user', JSON.stringify(response))
+      userStorage.set(response)
 
       toast.success('Successfully logged in!')
       navigate(getRouteUsers())
     } catch (err: any) {
-      console.error('Login error:', err)
-      const message = err.response?.data?.message || 'Invalid username or password'
+      const message = err.response?.data?.message || err.message || 'Invalid username or password'
       setError(message)
     } finally {
       setIsLoading(false)

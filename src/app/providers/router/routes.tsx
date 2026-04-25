@@ -18,24 +18,7 @@ export type RouteConfig = {
 import { lazy } from 'react'
 
 const LoginPage = lazy(() => import('@/pages/login'))
-
-function DashboardLayoutPlaceholder() {
-  return (
-    <div className="flex min-h-svh">
-      <aside className="hidden w-60 border-r bg-card md:block">
-        <div className="p-4 text-sm text-muted-foreground">Sidebar — Phase 4</div>
-      </aside>
-      <div className="flex flex-1 flex-col">
-        <header className="flex h-14 items-center border-b px-4">
-          <span className="text-sm text-muted-foreground">Topbar — Phase 4</span>
-        </header>
-        <main className="flex-1 p-6">
-          <Outlet />
-        </main>
-      </div>
-    </div>
-  )
-}
+import { DashboardLayout } from '@/pages/dashboard-layout'
 
 function UsersPagePlaceholder() {
   return <div className="text-muted-foreground">Users Page — Phase 5</div>
@@ -78,7 +61,7 @@ export const routeTree: RouteConfig[] = [
   // Protected routes (wrapped in RequireAuth via AppRouter)
   {
     path: getRouteDashboard(),
-    element: <DashboardLayoutPlaceholder />,
+    element: <DashboardLayout />,
     authOnly: true,
     children: [
       {
